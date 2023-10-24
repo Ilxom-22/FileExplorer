@@ -2,6 +2,7 @@ using FileExplorer.Application.FileStorage.Brokers;
 using FileExplorer.Application.FileStorage.Services;
 using FileExplorer.Infrastructure.FileStorage.Brokers;
 using FileExplorer.Infrastructure.FileStorage.Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,15 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var assemblies = Assembly
+    .GetExecutingAssembly() 
+    .GetReferencedAssemblies() 
+    .Select(Assembly.Load)
+    .ToList();
+
+assemblies.Add(Assembly.GetExecutingAssembly());
+builder.Services.AddAutoMapper(assemblies);
 
 builder.Services.AddScoped<IDirectoryProcessingService, DirectoryProcessingService>();
 builder.Services.AddScoped<IDirectoryService, DirectoryService>();
