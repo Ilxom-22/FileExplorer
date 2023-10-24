@@ -17,18 +17,6 @@ public class DriveService : IDriveService
     {
         var drives = _driveBroker.GetDrives();
 
-        var storagDrives = drives.Select(drive => new StorageDrive
-        {
-            Name = drive.VolumeLabel,
-            Path = drive.RootDirectory.FullName,
-            AvailableSpace = drive.AvailableFreeSpace / 1024 / 1024 / 1024,
-            Format = drive.DriveFormat,
-            Label = drive.Name,
-            Type = drive.DriveType.ToString(),
-            TotalSpace = drive.TotalSize / 1024 / 1024 / 1024,
-            UsedSpace = (drive.TotalSize - drive.TotalFreeSpace) / 1024 / 1024 / 1024
-        });
-
-        return storagDrives;
+        return drives;
     }
 }

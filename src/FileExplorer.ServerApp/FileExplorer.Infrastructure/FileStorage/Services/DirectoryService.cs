@@ -15,30 +15,7 @@ public class DirectoryService : IDirectoryService
 
     public IEnumerable<StorageDirectory> GetSubDirectories(string path)
     {
-        var paths = _directoryBroker.GetSubDirectoriesInfo(path).ToList();
-
-        var directories = paths.Select(path => new StorageDirectory()
-        {
-            Name = path.Name,
-            Path = path.FullName,
-            ItemsCount = path.GetFileSystemInfos().Count()
-        });
-
-        return directories;
-    }
-
-    public IEnumerable<StorageFile> GetFiles(string path)
-    {
-        var paths = _directoryBroker.GetFiles(path);
-
-        return paths.Select(path => new StorageFile()
-        {
-            Name = path.Name,
-            Path = path.FullName,
-            DirectoryPath = path.DirectoryName,
-            Extension = path.Extension,
-            Size = path.Length / 1024
-        });
+       return _directoryBroker.GetSubDirectoriesInfo(path).ToList();
     }
 
     public StorageDirectory GetDirectoryByPath(string path)

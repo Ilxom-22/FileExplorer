@@ -19,7 +19,7 @@ public class DirectoryProcessingService : IDirectoryProcessingService
         var storageItems = new List<IStorageEntry>();
 
         storageItems.AddRange(_directoryService.GetSubDirectories(directoryPath));
-        storageItems.AddRange(_directoryService.GetFiles(directoryPath));
+        storageItems.AddRange(_fileService.GetFiles(directoryPath));
 
         return new ValueTask<List<IStorageEntry>>(storageItems);
     }
