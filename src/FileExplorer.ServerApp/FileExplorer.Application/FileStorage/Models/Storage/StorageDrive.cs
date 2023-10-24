@@ -4,17 +4,19 @@ public class StorageDrive : IStorageEntry
 {
     public required string Name { get; set; }
 
-    public required string Path { get; set; }
+    public string Label { get; set; } = string.Empty;
 
-    public required string Label { get; set; }
+    public string Path { get; set; } = string.Empty;
 
-    public required string Format { get; set; }
+    public string Format { get; set; } = string.Empty;
 
-    public required string Type { get; set; }
+    public string Type { get; set; } = string.Empty;
 
     public long TotalSpace { get; set; }
 
-    public long AvailableSpace { get; set; }
+    public long FreeSpace { get; set; }
+
+    public long UnavailableSpace { get; set; }
 
     public long UsedSpace { get; set; }
 
