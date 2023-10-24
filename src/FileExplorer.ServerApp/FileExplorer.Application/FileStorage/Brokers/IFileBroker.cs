@@ -2,7 +2,7 @@
 
 namespace FileExplorer.Application.FileStorage.Brokers;
 
-public interface IDriveBroker
+public interface IFileBroker
 {
-    IEnumerable<StorageDrive> GetDrives();
+    StorageFile GetFileByPath(string path);
 }

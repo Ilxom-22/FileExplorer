@@ -4,15 +4,15 @@ using FileExplorer.Application.FileStorage.Models.Storage;
 
 namespace FileExplorer.Infrastructure.FileStorage.Brokers;
 
-public class DriveBroker : IDriveBroker
+public class FileBroker : IFileBroker
 {
     private readonly IMapper _mapper;
 
-    public DriveBroker(IMapper mapper)
+    public FileBroker(IMapper mapper)
     {
-        _mapper = mapper;
+        _mapper = mapper;   
     }
 
-    public IEnumerable<StorageDrive> GetDrives() 
-        => DriveInfo.GetDrives().Select(_mapper.Map<StorageDrive>);
+    public StorageFile GetFileByPath(string path)
+        => _mapper.Map<StorageFile>(new FileInfo(path));
 }
