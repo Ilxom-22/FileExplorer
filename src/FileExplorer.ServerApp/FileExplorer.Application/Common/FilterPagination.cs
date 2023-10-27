@@ -2,7 +2,7 @@
 
 public class FilterPagination
 {
-    public uint PageSize { get; set; }
+    public int PageSize { get; set; }
 
-    public uint PageToken { get; set; }
+    public int PageToken { get; set; }
 }
