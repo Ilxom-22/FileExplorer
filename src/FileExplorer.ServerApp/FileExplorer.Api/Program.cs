@@ -1,4 +1,5 @@
 using FileExplorer.Application.FileStorage.Brokers;
+using FileExplorer.Application.FileStorage.Models.Settings;
 using FileExplorer.Application.FileStorage.Services;
 using FileExplorer.Infrastructure.FileStorage.Brokers;
 using FileExplorer.Infrastructure.FileStorage.Services;
@@ -27,6 +28,8 @@ builder.Services.AddScoped<IDirectoryBroker, DirectoryBroker>();
 builder.Services.AddScoped<IFileBroker, FileBroker>();
 builder.Services.AddScoped<IDriveBroker, DriveBroker>();
 builder.Services.AddScoped<IDriveService, DriveService>();
+
+builder.Services.Configure<FileExtensions>(builder.Configuration.GetSection(nameof(FileExtensions)));
 
 var app = builder.Build();
 
