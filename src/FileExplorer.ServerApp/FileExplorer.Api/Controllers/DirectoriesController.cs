@@ -1,4 +1,5 @@
-﻿using FileExplorer.Application.FileStorage.Services;
+﻿using FileExplorer.Application.FileStorage.Models.Filtering;
+using FileExplorer.Application.FileStorage.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FileExplorer.Api.Controllers;
@@ -8,29 +9,25 @@ namespace FileExplorer.Api.Controllers;
 public class DirectoriesController : ControllerBase
 {
     private readonly IDirectoryProcessingService _directoryProcessingService;
-    private readonly IDirectoryService _directoryService;
 
-    public DirectoriesController(IDirectoryProcessingService directoryProcessingService, IDirectoryService directoryService)
+    public DirectoriesController(IDirectoryProcessingService directoryProcessingService)
     {
         _directoryProcessingService = directoryProcessingService;
-        _directoryService = directoryService;
     }
 
     [HttpGet("root/entries")]
-    public async ValueTask<IActionResult> GetRootEntriesAsync([FromServices] IWebHostEnvironment environment)
+    public async ValueTask<IActionResult> GetRootEntriesAsync([FromQuery] StorageDirectoryEntryFilterModel filterModel, [FromServices] IWebHostEnvironment environment)
     {
-        return Ok(await _directoryProcessingService.GetEntriesAsync(environment.WebRootPath));
-    }
+        var result = await _directoryProcessingService.GetEntriesAsync(environment.WebRootPath, filterModel);
 
-    [HttpGet("root/entries/directories")]
-    public ValueTask<IActionResult> GetRootDirectories([FromServices] IWebHostEnvironment environment)
-    {
-        return new ValueTask<IActionResult>(Ok(_directoryService.GetSubDirectories(environment.WebRootPath)));
+        return result.Any() ? Ok(result) : NoContent();
     }
 
     [HttpGet("{directoryPath}/entries")]
-    public async ValueTask<IActionResult> GetDirectoryEntriesByPathAsync(string directoryPath)
+    public async ValueTask<IActionResult> GetDirectoryEntriesByPathAsync([FromRoute] string directoryPath, [FromQuery] StorageDirectoryEntryFilterModel filterModel)
     {
-        return Ok(await _directoryProcessingService.GetEntriesAsync(directoryPath));
+        var result = await _directoryProcessingService.GetEntriesAsync(directoryPath, filterModel);
+
+        return result.Any() ? Ok(result) : NoContent();
     }
 }

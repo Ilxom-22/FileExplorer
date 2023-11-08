@@ -1,6 +1,7 @@
 ﻿using FileExplorer.Application.FileStorage.Models.Filtering;
 using FileExplorer.Application.FileStorage.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 
 namespace FileExplorer.Api.Controllers;
 
@@ -9,24 +10,27 @@ namespace FileExplorer.Api.Controllers;
 
 public class FilesController : ControllerBase
 {
-    private readonly IFileService _fileService;
+    private readonly IFileProcessingService _fileProcessingService;
     private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public FilesController(IFileService fileService, IWebHostEnvironment environment)
+    public FilesController(IFileProcessingService fileProcessingService, IWebHostEnvironment environment)
     {
-        _fileService = fileService;
+        _fileProcessingService = fileProcessingService;
         _webHostEnvironment = environment;
     }
 
-    [HttpPost]
-    public ValueTask<IActionResult> GetFilesByFilter([FromQuery] StorageFileFilterModel filter)
+    [HttpGet("root/files/filter")]
+    public ValueTask<IActionResult> GetFilesSummary()
     {
-        return new ValueTask<IActionResult>(Ok(_fileService.GetFilesByFilter(filter, @"C:\Users\asus\OneDrive\Pictures")));
+        var result = _fileProcessingService.GetFilterDataModelAsync(_webHostEnvironment.WebRootPath);
+        return new(Ok(result));
     }
 
-    [HttpGet("root/entries/files")]
-    public ValueTask<IActionResult> GetRootFiles()
+    [HttpGet("root/files/by-filter")]
+    public ValueTask<IActionResult> GetFilesByFilter([FromQuery] StorageFileFilterModel filterModel)
     {
-        return new ValueTask<IActionResult>(Ok(_fileService.GetFiles(_webHostEnvironment.WebRootPath)));
+        filterModel.DirectoryPath = _webHostEnvironment.WebRootPath;
+        var files = _fileProcessingService.GetByFilterAsync(filterModel);
+        return files.Any() ? new(Ok(files)) : new(NotFound(files));
     }
 }
