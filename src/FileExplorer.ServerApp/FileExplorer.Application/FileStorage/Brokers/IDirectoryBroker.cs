@@ -4,7 +4,13 @@ namespace FileExplorer.Application.FileStorage.Brokers;
 
 public interface IDirectoryBroker
 {
-    IEnumerable<string> GetSubDirectories(string path);
-    IEnumerable<StorageDirectory> GetSubDirectoriesInfo(string path);  
+    IEnumerable<string> GetSubDirectoriesPath(string path);
+
+    IEnumerable<string> GetFilesPath(string path);
+
+    IEnumerable<StorageDirectory> GetSubDirectoriesInfo(string path);
+
+    StorageDirectory GetDirectoryByPath(string path);
+
     IEnumerable<StorageFile> GetFiles(string path);
 }
