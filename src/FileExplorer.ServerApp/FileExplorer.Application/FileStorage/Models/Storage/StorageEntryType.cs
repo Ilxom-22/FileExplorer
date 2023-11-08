@@ -1,6 +1,6 @@
 ﻿namespace FileExplorer.Application.FileStorage.Models.Storage;
 
-public enum StorageItemType
+public enum StorageEntryType
 {
     Drive = 0,
     Directory = 1,

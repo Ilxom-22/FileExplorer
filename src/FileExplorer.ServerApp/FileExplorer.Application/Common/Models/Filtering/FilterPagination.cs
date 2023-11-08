@@ -1,4 +1,4 @@
-﻿namespace FileExplorer.Application.Common;
+﻿namespace FileExplorer.Application.Common.Models.Filtering;
 
 public class FilterPagination
 {

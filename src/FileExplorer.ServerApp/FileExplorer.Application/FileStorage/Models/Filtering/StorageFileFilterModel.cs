@@ -1,12 +1,10 @@
-﻿using FileExplorer.Application.Common;
+﻿using FileExplorer.Application.Common.Models.Filtering;
 
 namespace FileExplorer.Application.FileStorage.Models.Filtering;
 
 public class StorageFileFilterModel : FilterPagination
 {
-    public bool IncludeImages { get; set; }
+    public string DirectoryPath { get; set; } = string.Empty;
 
-    public bool IncludeDocuments { get; set; }
-
-    public bool IncludeSourceCode { get; set; }
+    public ICollection<StorageFileType> FilesType { get; set; } = default!;
 }
