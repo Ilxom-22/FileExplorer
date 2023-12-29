@@ -17,8 +17,4 @@
     <ProjectReference Include="..\FileExplorer.Infrastructure\FileExplorer.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
 </Project>

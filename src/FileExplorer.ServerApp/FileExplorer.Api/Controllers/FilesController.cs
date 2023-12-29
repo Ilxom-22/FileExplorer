@@ -1,7 +1,6 @@
 ﻿using FileExplorer.Application.FileStorage.Models.Filtering;
 using FileExplorer.Application.FileStorage.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 
 namespace FileExplorer.Api.Controllers;
 

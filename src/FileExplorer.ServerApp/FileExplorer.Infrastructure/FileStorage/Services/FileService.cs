@@ -45,7 +45,7 @@ public class FileService : IFileService
 
     public StorageFileType GetFileType(string filePath)
     {
-        var fileExtension = Path.GetExtension(filePath);
+        var fileExtension = Path.GetExtension(filePath).TrimStart('.');
 
         var matchedFileType = _fileFilterSettings.FileExtensions.FirstOrDefault(extensionSettings => extensionSettings.Extensions.Contains(fileExtension));
 
